@@ -1,0 +1,2 @@
+// categories
+export const SET_FETCHED_CATEGORIES = 'SET_FETCHED_CATEGORIES';
