@@ -17,3 +17,11 @@ export function setFetchedCategories({categories}){
     categories
   }
 }
+
+export function navigateToProducts(categoryId) {
+  return {
+    type: 'Navigation/NAVIGATE',
+    routeName: 'Products',
+    id: categoryId,
+  };
+}

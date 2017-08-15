@@ -1,26 +1,11 @@
 import React, { Component } from "react";
 import { Text } from "react-native";
 import { Provider, connect } from "react-redux";
-import { StackNavigator, addNavigationHelpers } from "react-navigation";
-
-import Routes from "./config/routes";
+import { addNavigationHelpers } from "react-navigation";
+import { AppNavigator } from './reducers/navigation'
 
 import getStore from "./store";
 
-const AppNavigator = StackNavigator(Routes, {
-    navigationOptions: {
-        title: ({ state }) => {
-            if (state.params) {
-                return `${state.params.title}`;
-            }
-        }
-    }
-});
-
-const navReducer = (state, action) => {
-    const newState = AppNavigator.router.getStateForAction(action, state);
-    return newState || state;
-};
 
 @connect(state => ({
     nav: state.nav
@@ -38,7 +23,7 @@ class AppWithNavigationState extends Component {
     }
 }
 
-const store = getStore(navReducer);
+const store = getStore();
 console.log(store.getState());
 
 export default function App() {

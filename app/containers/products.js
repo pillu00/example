@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import ReactNative from 'react-native';
 import {connect} from 'react-redux';
-import * as CategoriesAction from '../actions/categories';
+import * as ProductsAction from '../actions/products';
 import { bindActionCreators } from 'redux';
 
 const {
@@ -14,10 +14,10 @@ const {
   StyleSheet,
 } = ReactNative
 
-class Categories extends Component {
+class Products extends Component {
 
   static navigationOptions = {
-    title: "Home"
+    title: "Products"
   };
 
   constructor(props){
@@ -26,30 +26,27 @@ class Categories extends Component {
   }
 
   componentDidMount(){
+    const categoryId = this.props.params.id;
     this.setState({fetching :true});
-    this.props.fetchCategories().then(() => {
+    this.props.fetchProducts(categoryId).then(() => {
       this.setState({ fetching :false} );
     });
   }
 
-  categories(){
-    return Object.keys(this.props.fetchedCategories).map(key => this.props.fetchedCategories[key]);
-  }
-
-  onPressButton(categoryId) {
-    this.props.navigateToProducts(categoryId);
+  products(){
+    return Object.keys(this.props.fetchedProducts).map(key => this.props.fetchedProducts[key]);
   }
 
   render(){
     return <View style ={styles.scene} >
     <ScrollView style ={styles.scrollSection} >
-      {!this.state.fetching && this.categories().map((category) => {
+      {!this.state.fetching && this.products().map((product) => {
 
-        return <TouchableHighlight key = {category.id} onPress={ () => this.onPressButton(category.id) } >
+        return <TouchableHighlight key = {product.id} >
           <View>
-            <Image source = {{ uri: category.imageURL }} style = {styles.resultImage} />
+            <Image source = {{ uri: product.productImage }} style = {styles.resultImage} />
             <Text style ={styles.resultText} >
-              {category.categoryName}
+              {product.productName}
             </Text>
           </View>
         </TouchableHighlight>
@@ -87,7 +84,8 @@ const styles = StyleSheet.create({
 
 export default connect(
   state => ({
-    fetchedCategories: state.fetchedCategories
+    fetchedProducts: state.fetchedProducts,
+    params: state.nav.routes[state.nav.index].params,
   }),
-  dispatch => bindActionCreators(CategoriesAction, dispatch)
-)(Categories);
+  dispatch => bindActionCreators(ProductsAction, dispatch)
+)(Products);

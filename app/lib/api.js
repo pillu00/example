@@ -36,14 +36,6 @@ class Api {
     .catch((error) => {
         console.error(error);
       });
-
-    // return fetch(url, options).then( resp => {
-    //   let json = resp.json();
-    //   if (resp.ok) {
-    //     return json
-    //   }
-    //   return json.then(err => {throw err});
-    // }).then( json => json.results );
   }
 }
 export default Api

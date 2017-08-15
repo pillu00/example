@@ -1,10 +1,10 @@
 import {combineReducers} from 'redux';
-import {fetchedCategories} from './categories';
+import * as categoriesReducers from './categories';
+import * as productsReducers from './products';
+import {navigationReducer} from './navigation';
 
-
-export default function getRootReducer(navReducer) {
-    return combineReducers({
-        nav: navReducer,
-        fetchedCategories
-    });
-}
+export default combineReducers(Object.assign(
+  navigationReducer,
+  categoriesReducers,
+  productsReducers,
+));
